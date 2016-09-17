@@ -4,8 +4,8 @@ import core.Settings;
 import core.assets.Loader;
 import core.debug.Debug;
 import core.programs.ProgramManager;
+import core.programs.RepoInstallerProgram;
 import core.programs.TestProgram;
-import core.programs.UserManagerProgram;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -48,7 +48,8 @@ public class DesktopState extends BasicGameState {
     private void loadVariables(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         programManager = new ProgramManager();
 
-        programManager.addProgram(new UserManagerProgram());
+        //programManager.addProgram(new UserManagerProgram());
+        programManager.addProgram(new RepoInstallerProgram());
 
         wallpaper = Loader.getImage("/wallpaper.png");
         Debug.logInfo("Successfully initialized all variables");

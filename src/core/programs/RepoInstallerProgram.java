@@ -17,12 +17,12 @@ public class RepoInstallerProgram extends AbstractProgram {
 
     void initUI() {
         panel.setResizable(false);
-        panel.setSize(500, 300);
+        panel.setSize(130, 80);
 
-        usernameField = new UITextField(new UIRect(10, 30, 200, 20));
+        usernameField = new UITextField(new UIRect(10, 30, 80, 20));
         panel.addComponent(usernameField);
 
-        button = new UIButton(new UIRect(150, 55, 200, 20));
+        button = new UIButton(new UIRect(10, 55, 80, 20));
         panel.addComponent(button);
     }
 

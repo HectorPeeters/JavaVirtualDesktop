@@ -2,20 +2,16 @@ package core.states;
 
 import core.InputKeyListener;
 import core.Settings;
+import core.database.DatabaseManager;
+import core.database.Hasher;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import server.AcceptPacket;
-import server.Client;
-import server.ConnectPacket;
-import server.Packet;
 
 public class LoginState extends BasicGameState {
-
-    public static Client client;
 
     private static String loginString = "Login:";
     private static String passwordString = "Password:";
@@ -30,7 +26,6 @@ public class LoginState extends BasicGameState {
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        client = new Client();
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
@@ -46,27 +41,27 @@ public class LoginState extends BasicGameState {
 
     private String getPasswordString(String password) {
         String result = "";
-        for(int i = 0; i < password.length(); i ++) {
+        for (int i = 0; i < password.length(); i++) {
             result += "*";
         }
         return result;
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        if(keyListener == null) {
+        if (keyListener == null) {
             keyListener = new InputKeyListener();
             keyListener.setEnabled(true);
             gameContainer.getInput().addKeyListener(keyListener);
         }
-        if(gameContainer.getInput().isKeyPressed(Input.KEY_RETURN) && !keyListener.getString().equals("")) {
-            if(loginPhase) {
+        if (gameContainer.getInput().isKeyPressed(Input.KEY_RETURN) && !keyListener.getString().equals("")) {
+            if (loginPhase) {
                 loginPhase = false;
                 currentLogin = keyListener.getString();
                 keyListener.setString("");
             } else {
                 currentPassword = keyListener.getString();
                 keyListener.setString("");
-                if(!login(currentLogin, currentPassword)) {
+                if (!login(currentLogin, currentPassword)) {
                     loginPhase = true;
                 } else {
                     stateBasedGame.enterState(States.getID("Desktop"));
@@ -76,9 +71,10 @@ public class LoginState extends BasicGameState {
     }
 
     private boolean login(String username, String password) {
-        client.sendPacket(new ConnectPacket(username, password));
+        /*client.sendPacket(new ConnectPacket(username, password));
         Packet response = client.waitAndReceive();
         AcceptPacket acceptPacket = (AcceptPacket) response;
-        return acceptPacket.isAccepted();
+        return acceptPacket.isAccepted();*/
+        return DatabaseManager.getPassword(username).equals(Hasher.hash(password));
     }
 }

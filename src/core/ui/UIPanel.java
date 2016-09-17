@@ -112,7 +112,9 @@ public class UIPanel {
         graphics.setColor(Color.black);
         graphics.drawString(title, rect.getX() + 4, rect.getY());
 
-        uiComponents.stream().filter(uiComponent -> uiComponent.enabled).forEach(uiComponent -> uiComponent.draw(gameContainer, stateBasedGame, graphics));
+        for(AbstractUIComponent uiComponent : uiComponents)
+            if(uiComponent.enabled)
+                uiComponent.draw(gameContainer, stateBasedGame, graphics);
     }
 
     public void addComponent(AbstractUIComponent uiComponent) {

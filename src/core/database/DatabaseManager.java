@@ -56,13 +56,29 @@ public final class DatabaseManager {
         return "";
     }
 
-    public static String getRepoPath(String repoName) {
+    public static String getRepoUrl(String repoName) {
         try {
             String statement = "SELECT url FROM repos WHERE `name` = \"" + repoName + "\"";
             Statement st = currentConnection.createStatement();
             ResultSet rs = st.executeQuery(statement);
             if (rs.next()) {
-                return rs.getString("password");
+                return rs.getString("url");
+            } else {
+                System.err.println("repo " + repoName + " does not exist");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String getRepoType(String repoName) {
+        try {
+            String statement = "SELECT type FROM repos WHERE `name` = \"" + repoName + "\"";
+            Statement st = currentConnection.createStatement();
+            ResultSet rs = st.executeQuery(statement);
+            if (rs.next()) {
+                return rs.getString("type");
             } else {
                 System.err.println("repo " + repoName + " does not exist");
             }

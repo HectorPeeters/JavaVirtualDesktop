@@ -24,11 +24,11 @@ public class Main extends StateBasedGame {
 
     public static void main(String[] args) {
         try {
-            System.setProperty("java.library.path", "./natives/linux");
             Debug.logInfo("Started program");
             AppGameContainer container = new AppGameContainer(new Main());
             container.setDisplayMode(Settings.WIDTH, Settings.HEIGHT, false);
             container.setTargetFrameRate(120);
+            container.setShowFPS(false);
             container.start();
         } catch (SlickException e) {
             e.printStackTrace();

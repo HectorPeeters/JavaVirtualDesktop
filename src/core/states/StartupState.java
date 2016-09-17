@@ -2,6 +2,7 @@ package core.states;
 
 import core.Settings;
 import core.assets.Loader;
+import core.assets.RepoManager;
 import core.database.DatabaseManager;
 import core.debug.Debug;
 import org.newdawn.slick.GameContainer;
@@ -21,6 +22,7 @@ public class StartupState extends BasicGameState {
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         Loader.queueSpritesheet("/spritesheets/ui.xml");
+        RepoManager.loadRepos();
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {

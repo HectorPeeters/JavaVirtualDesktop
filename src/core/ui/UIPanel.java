@@ -135,12 +135,9 @@ public class UIPanel {
         return rect;
     }
 
-    public void setMinHeight(int minHeight) {
-        this.minHeight = minHeight;
-    }
-
-    public void setMinWidth(int minWidth) {
+    public void setMinSize(int minWidth, int minHeight) {
         this.minWidth = minWidth;
+        this.minHeight = minHeight;
     }
 
     public void close() {

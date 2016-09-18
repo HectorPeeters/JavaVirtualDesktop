@@ -1,6 +1,7 @@
 package networking.server;
 
 import networking.packet.Packet;
+import networking.packet.PacketResolver;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketAddress;
 
-public class ServerClient {
+public class ServerClient extends Thread {
 
     private Socket socket;
     private DataInputStream in;
@@ -23,7 +24,8 @@ public class ServerClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.connected = true;
+        connected = true;
+        start();
     }
 
     public void send(Packet packet) {
@@ -35,19 +37,47 @@ public class ServerClient {
         }
     }
 
+    @Override
+    public void run() {
+        String received;
+        while (connected) {
+            try {
+                received = in.readUTF();
+            } catch (IOException e) {
+                Server.forceRemoveClient(this);
+                return;
+            }
+            if (!received.equals("")) {
+                Packet packet = PacketResolver.getPacket(received);
+                ServerWindow.log("received from " + getRemoteSocketAddress() + ": ");
+                ServerWindow.log("\t" + packet + "\n");
+                resolvePacket(packet);
+            }
+        }
+    }
+
+    private static void resolvePacket(Packet packet) {
+
+    }
+
     public SocketAddress getRemoteSocketAddress() {
         return socket.getRemoteSocketAddress();
     }
 
     public void close() {
+        connected = false;
+        SocketAddress address = socket.getRemoteSocketAddress();
         try {
-            in.close();
-            out.close();
-            socket.close();
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
+            if (socket != null)
+                socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        connected = false;
+        ServerWindow.log("Disconnected " + address);
     }
 
     @Override

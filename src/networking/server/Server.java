@@ -18,20 +18,14 @@ public class Server {
         running = true;
         new ServerWindow();
         socket = new ServerSocket(4600);
+        ServerWindow.log("Successfully started server on port " + socket.getLocalPort());
+
         while (running) {
             ServerClient client = new ServerClient(socket.accept());
-            clients.add(client);
-            client.send(new StringPacket("login", "test"));
+            addClient(client);
 
             ServerWindow.log("Connected to " + client.getRemoteSocketAddress());
-            ServerWindow.getInstance().updateView();
         }
-    }
-
-    public static void kick(ServerClient client) {
-        clients.remove(client);
-        client.send(new StringPacket("disconnect", "kicked"));
-        client.close();
     }
 
     public static void stopServer() {
@@ -42,6 +36,17 @@ public class Server {
             i.remove();
         }
         running = false;
+    }
+
+    public static void addClient(ServerClient client) {
+        clients.add(client);
+        ServerWindow.getInstance().updateView();
+    }
+
+    public static void forceRemoveClient(ServerClient client) {
+        clients.remove(client);
+        client.close();
+        ServerWindow.getInstance().updateView();
     }
 
 }

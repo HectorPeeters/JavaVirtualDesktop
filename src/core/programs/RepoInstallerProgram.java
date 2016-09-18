@@ -16,8 +16,9 @@ public class RepoInstallerProgram extends AbstractProgram {
     }
 
     void initUI() {
-        panel.setResizable(false);
-        panel.setSize(130, 80);
+        panel.setResizable(true);
+        panel.setSize(150, 80);
+        panel.setMinSize(150, 80);
 
         usernameField = new UITextField(new UIRect(10, 30, 80, 20));
         panel.addComponent(usernameField);

@@ -1,5 +1,7 @@
 package networking.server;
 
+import networking.packet.StringPacket;
+
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
@@ -67,12 +69,13 @@ public class ServerWindow extends JFrame {
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e) && !listUsers.isSelectionEmpty() && listUsers.locationToIndex(e.getPoint()) == listUsers.getSelectedIndex()) {
                     JPopupMenu menu = new JPopupMenu();
-                    JMenuItem kick = new JMenuItem("kick");
+                    JMenuItem kick = new JMenuItem("disconnect");
+
                     kick.addActionListener(e1 -> {
-                        Server.kick(listUsers.getSelectedValue());
-                        log("Kicked " + listUsers.getSelectedValue().getRemoteSocketAddress());
-                        updateView();
+                        ServerClient client = listUsers.getSelectedValue();
+                        client.send(new StringPacket("disconnect", "kicked"));
                     });
+
                     menu.add(kick);
                     menu.show(e.getComponent(), e.getX(), e.getY());
                     menu.show(listUsers, e.getX(), e.getY());

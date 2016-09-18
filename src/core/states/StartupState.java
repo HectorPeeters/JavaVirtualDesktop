@@ -40,7 +40,7 @@ public class StartupState extends BasicGameState {
             }
         } else if (gameContainer.getInput().isKeyPressed(Input.KEY_RETURN)) {
             Debug.clearLog();
-            stateBasedGame.enterState(States.getID("Login"));
+            stateBasedGame.enterState(States.getID("Desktop"));
         }
     }
 }

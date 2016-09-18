@@ -1,6 +1,7 @@
-package networking;
+package networking.packet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArrayPacket extends Packet {
 
@@ -12,7 +13,12 @@ public class ArrayPacket extends Packet {
         for (Packet packet : (ArrayList<Packet>) data)
             if (packet.name.equals(name))
                 return packet;
+        System.err.println("ArrayPacket - element " + name + " is not found");
         return null;
+    }
+
+    public List<Packet> getElements() {
+        return (ArrayList<Packet>) data;
     }
 
     public void add(Packet packet) {
@@ -27,5 +33,15 @@ public class ArrayPacket extends Packet {
         for (Packet p : (ArrayList<Packet>) data)
             dataString += "|" + p.getData();
         return dataString;
+    }
+
+    @Override
+    public String toString() {
+        String packetName = "ArrayPacket name='" + name + "\', size=" + getElements().size() + "{\n";
+        for (Packet p : getElements()) {
+            packetName += "\t" + p + "\n";
+        }
+        packetName += "}";
+        return packetName;
     }
 }

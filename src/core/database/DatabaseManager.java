@@ -20,7 +20,7 @@ public final class DatabaseManager {
 
     public static void addUser(String username, String password) {
         try {
-            String statement = "INSERT INTO users (username, password) values (\'" + username + "\', \'" +  Hasher.hash(password) + "\')";
+            String statement = "INSERT INTO users (username, password) values (\'" + username + "\', \'" + Hasher.hash(password) + "\')";
             Statement st = currentConnection.createStatement();
             st.execute(statement);
         } catch (SQLException e) {

@@ -1,8 +1,8 @@
-package networking;
+package networking.packet;
 
 public class StringPacket extends Packet {
 
-    public StringPacket(String name, Object data) {
+    public StringPacket(String name, String data) {
         super(name, data, PacketType.STRING);
     }
 

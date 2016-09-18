@@ -1,8 +1,8 @@
-package networking;
+package networking.packet;
 
 public class BooleanPacket extends Packet {
 
-    public BooleanPacket(String name, Object data) {
+    public BooleanPacket(String name, boolean data) {
         super(name, data, PacketType.BOOLEAN);
     }
 

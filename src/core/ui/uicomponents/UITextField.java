@@ -52,10 +52,11 @@ public class UITextField extends AbstractUIComponent {
         }
         return showingText;
     }
+
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         boxImage.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
         graphics.drawString(getShowString(gameContainer), rect.getX() + 4, rect.getY());
-        if(showCursor && focused)
+        if (showCursor && focused)
             graphics.fillRect(rect.getX() + gameContainer.getDefaultFont().getWidth(showingText) + 4, rect.getY(), 1, 18);
     }
 

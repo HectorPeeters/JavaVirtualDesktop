@@ -36,11 +36,11 @@ public class DesktopState extends BasicGameState {
         if (!loadedVariables)
             loadVariables(gameContainer, stateBasedGame);
         programManager.update(gameContainer, stateBasedGame, i);
-        if(gameContainer.getInput().isKeyDown(Input.KEY_D)) {
+        if (gameContainer.getInput().isKeyDown(Input.KEY_D)) {
             System.out.println(Runtime.getRuntime().totalMemory() / (1024 * 1024) + "MB");
 
         }
-        if(gameContainer.getInput().isKeyPressed(Input.KEY_SPACE)) {
+        if (gameContainer.getInput().isKeyPressed(Input.KEY_SPACE)) {
             programManager.addProgram(new TestProgram());
         }
     }

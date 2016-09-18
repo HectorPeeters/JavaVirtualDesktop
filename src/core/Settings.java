@@ -11,48 +11,5 @@ public class Settings {
     public static final String DATABASE_USERNAME = "root";
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static final String DATABASE_PASSWORD = "Harrypotter2012";
 }

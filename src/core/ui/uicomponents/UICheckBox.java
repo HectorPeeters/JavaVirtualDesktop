@@ -25,7 +25,7 @@ public class UICheckBox extends AbstractUIComponent {
 
     public boolean update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         Input input = gameContainer.getInput();
-        if(rect.contains(input.getMouseX(), input.getMouseY())) {
+        if (rect.contains(input.getMouseX(), input.getMouseY())) {
             if (input.isMousePressed(0))
                 checked = !checked;
         }
@@ -34,7 +34,7 @@ public class UICheckBox extends AbstractUIComponent {
 
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         boxImage.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-        if(checked)
+        if (checked)
             crossImage.draw(rect.getX() + rect.getWidth() / 4, rect.getY() + rect.getHeight() / 4, rect.getWidth() / 2, rect.getHeight() / 2);
     }
 

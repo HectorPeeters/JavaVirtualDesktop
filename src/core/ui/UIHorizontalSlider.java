@@ -27,7 +27,7 @@ public class UIHorizontalSlider extends AbstractUIComponent {
         UIRect knobRect = new UIRect((int) (rect.getX() - 6 + value * rect.getWidth()), rect.getY() - 2, 12, 12);
         Input input = gameContainer.getInput();
         if (input.isMouseButtonDown(0)) {
-            if(knobRect.contains(input.getMouseX(), input.getMouseY()) || dragging) {
+            if (knobRect.contains(input.getMouseX(), input.getMouseY()) || dragging) {
                 float change = input.getMouseX() - prevMouseX;
                 value += change / rect.getWidth();
                 if (value > 1)
@@ -50,7 +50,7 @@ public class UIHorizontalSlider extends AbstractUIComponent {
     }
 
     public float getValue() {
-        return (float)Math.round(value * 100.0) / 100.0f;
+        return (float) Math.round(value * 100.0) / 100.0f;
     }
 
     public void setValue(float value) {

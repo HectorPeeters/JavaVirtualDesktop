@@ -1,4 +1,4 @@
-package networking;
+package networking.packet;
 
 public abstract class Packet {
 

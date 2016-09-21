@@ -25,6 +25,7 @@ public class Main extends StateBasedGame {
     public static void main(String[] args) {
         try {
             Debug.logInfo("Started program");
+            System.out.println("library path: " + System.getProperty("java.library.path"));
             AppGameContainer container = new AppGameContainer(new Main());
             container.setDisplayMode(Settings.WIDTH, Settings.HEIGHT, false);
             container.setTargetFrameRate(120);

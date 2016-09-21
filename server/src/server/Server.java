@@ -1,7 +1,9 @@
-package networking.server;
+package server;
 
-import networking.packet.StringPacket;
+import packet.StringPacket;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,21 +13,41 @@ public class Server {
 
     public static List<ServerClient> clients = new ArrayList<>();
 
-    private static ServerSocket socket;
     private static boolean running;
 
+    private static Thread disconnectThread;
+
     public static void main(String[] args) throws Exception {
+        String port = JOptionPane.showInputDialog("Please input server port:");
+
         running = true;
         new ServerWindow();
-        socket = new ServerSocket(4600);
+        ServerSocket socket = new ServerSocket(Integer.parseInt(port));
         ServerWindow.log("Successfully started server on port " + socket.getLocalPort());
 
-        while (running) {
-            ServerClient client = new ServerClient(socket.accept());
-            addClient(client);
+        disconnectThread = new Thread(() -> {
+            while (running) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                clients.stream().filter(client -> !client.isReachable()).forEach(Server::forceRemoveClient);
+            }
+        });
+        disconnectThread.start();
 
+        while (running) {
+            ServerClient client = null;
+            try {
+                client = new ServerClient(socket.accept());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            addClient(client);
             ServerWindow.log("Connected to " + client.getRemoteSocketAddress());
         }
+
     }
 
     public static void stopServer() {

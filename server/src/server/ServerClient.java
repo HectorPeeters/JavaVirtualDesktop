@@ -1,7 +1,9 @@
-package networking.server;
+package server;
 
-import networking.packet.Packet;
-import networking.packet.PacketResolver;
+import packet.ArrayPacket;
+import packet.BooleanPacket;
+import packet.Packet;
+import packet.PacketResolver;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,7 +32,7 @@ public class ServerClient extends Thread {
 
     public void send(Packet packet) {
         try {
-            out.writeUTF(packet.getData());
+            out.writeUTF(packet.getOutput());
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,6 +50,7 @@ public class ServerClient extends Thread {
                 return;
             }
             if (!received.equals("")) {
+                ServerWindow.log("received from " + getRemoteSocketAddress() + ": " + received);
                 Packet packet = PacketResolver.getPacket(received);
                 ServerWindow.log("received from " + getRemoteSocketAddress() + ": ");
                 ServerWindow.log("\t" + packet + "\n");
@@ -56,12 +59,19 @@ public class ServerClient extends Thread {
         }
     }
 
-    private static void resolvePacket(Packet packet) {
-
-    }
-
-    public SocketAddress getRemoteSocketAddress() {
-        return socket.getRemoteSocketAddress();
+    private void resolvePacket(Packet packet) {
+        switch (packet.name) {
+            case "login":
+                ArrayPacket array = (ArrayPacket) packet;
+                String username = array.get("username").data.toString();
+                String password = array.get("password").data.toString();
+                if (!Users.doesUserExist(username)) {
+                    System.out.println("user not found");
+                    send(new BooleanPacket("login", false));
+                } else {
+                    send(new BooleanPacket("login", Users.getPassword(username).equals(password)));
+                }
+        }
     }
 
     public void close() {
@@ -80,8 +90,21 @@ public class ServerClient extends Thread {
         ServerWindow.log("Disconnected " + address);
     }
 
+    public SocketAddress getRemoteSocketAddress() {
+        return socket.getRemoteSocketAddress();
+    }
+
     @Override
     public String toString() {
         return getRemoteSocketAddress() + "";
     }
+
+    public boolean isReachable() {
+        try {
+            return socket.getInetAddress().isReachable(20);
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
 }

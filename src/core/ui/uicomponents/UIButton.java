@@ -44,12 +44,12 @@ public class UIButton extends AbstractUIComponent {
 
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         if (!hover) {
-            image.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+            image.draw(rect.x, rect.y, rect.width, rect.height);
         } else {
             if (down) {
-                pressedImage.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+                pressedImage.draw(rect.x, rect.y, rect.width, rect.height);
             } else {
-                hoverImage.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+                hoverImage.draw(rect.x, rect.y, rect.width, rect.height);
             }
         }
     }

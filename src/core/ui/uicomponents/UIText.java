@@ -20,7 +20,7 @@ public class UIText extends AbstractUIComponent {
     }
 
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawString(text, rect.getX(), rect.getY());
+        graphics.drawString(text, rect.x, rect.y);
     }
 
     public String getText() {

@@ -1,6 +1,6 @@
-package networking.server;
+package server;
 
-import networking.packet.StringPacket;
+import packet.StringPacket;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -37,7 +37,6 @@ public class ServerWindow extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        setAlwaysOnTop(true);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 Server.stopServer();

@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="jinput">
+  <library name="slick2d">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/jinput.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/lwjgl.jar!/" />

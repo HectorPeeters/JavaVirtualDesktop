@@ -1,7 +1,7 @@
 package core.programs;
 
-import core.ui.UIHorizontalSlider;
 import core.ui.UIRect;
+import core.ui.uicomponents.UIHorizontalSlider;
 import core.ui.uicomponents.UIText;
 import core.ui.uicomponents.UITextField;
 import org.newdawn.slick.GameContainer;

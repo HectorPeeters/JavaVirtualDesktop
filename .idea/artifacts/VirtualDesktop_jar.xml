@@ -2,8 +2,11 @@
   <artifact type="jar" build-on-make="true" name="VirtualDesktop:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/VirtualDesktop_jar</output-path>
     <root id="archive" name="VirtualDesktop.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/utils/src/META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="VirtualDesktop" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.39-bin.jar" path-in-jar="/" />
+      <element id="module-output" name="utils" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jinput.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/lwjgl.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/lwjgl_util.jar" path-in-jar="/" />

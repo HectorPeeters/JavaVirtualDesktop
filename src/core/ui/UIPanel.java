@@ -35,9 +35,9 @@ public class UIPanel {
 
     public UIPanel(UIRect rect) {
         this.rect = rect;
-        moveRect = new UIRect(rect.getX(), rect.getY(), rect.getWidth(), 20);
-        resizeRect = new UIRect(rect.getX() + rect.getWidth() - 20, rect.getY() + rect.getHeight() - 20, 20, 20);
-        closeRect = new UIRect(rect.getX() + rect.getWidth() - 16, rect.getY() + 4, 12, 12);
+        moveRect = new UIRect(rect.x, rect.y, rect.width, 20);
+        resizeRect = new UIRect(rect.x + rect.width - 20, rect.y + rect.height - 20, 20, 20);
+        closeRect = new UIRect(rect.x + rect.width - 16, rect.y + 4, 12, 12);
 
         backgroundImage = new ScalableImage(Loader.getSpritesheetImage("grey_panel.png"), 7, 7, 7, 7);
         closeIcon = Loader.getSpritesheetImage("grey_crossGrey.png");
@@ -46,8 +46,10 @@ public class UIPanel {
     public boolean update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         boolean hasUpdated = false;
         for (AbstractUIComponent uiComponent : uiComponents)
-            if (uiComponent.update(gameContainer, stateBasedGame, i) && !hasUpdated)
+            if (uiComponent.update(gameContainer, stateBasedGame, i)) {
                 hasUpdated = true;
+                break;
+            }
 
         Input input = gameContainer.getInput();
         if (input.isMouseButtonDown(0)) {
@@ -80,55 +82,53 @@ public class UIPanel {
     }
 
     private void resize(int changeWidth, int changeHeight) {
-        rect.setWidth(rect.getWidth() + changeWidth);
-        rect.setHeight(rect.getHeight() + changeHeight);
-        if (rect.getWidth() < minWidth)
-            rect.setWidth(minWidth);
-        if (rect.getHeight() < minHeight)
-            rect.setHeight(minHeight);
-        moveRect = new UIRect(rect.getX(), rect.getY(), rect.getWidth(), 20);
-        resizeRect = new UIRect(rect.getX() + rect.getWidth() - 20, rect.getY() + rect.getHeight() - 20, 20, 20);
-        closeRect = new UIRect(rect.getX() + rect.getWidth() - 16, rect.getY() + 4, 12, 12);
+        rect.width += changeWidth;
+        rect.height += changeHeight;
+        if (rect.width < minWidth)
+            rect.width = minWidth;
+        if (rect.height < minHeight)
+            rect.height = minHeight;
+        moveRect = new UIRect(rect.x, rect.y, rect.width, 20);
+        resizeRect = new UIRect(rect.x + rect.width - 20, rect.y + rect.height - 20, 20, 20);
+        closeRect = new UIRect(rect.x + rect.width - 16, rect.y + 4, 12, 12);
     }
 
     private void move(int changeX, int changeY) {
-        rect.setX(rect.getX() + changeX);
-        rect.setY(rect.getY() + changeY);
-        moveRect.setX(moveRect.getX() + changeX);
-        moveRect.setY(moveRect.getY() + changeY);
-        resizeRect.setX(resizeRect.getX() + changeX);
-        resizeRect.setY(resizeRect.getY() + changeY);
-        closeRect.setX(closeRect.getX() + changeX);
-        closeRect.setY(closeRect.getY() + changeY);
+        rect.x += changeX;
+        rect.y += changeY;
+        moveRect.x += changeX;
+        moveRect.y += changeY;
+        resizeRect.x += changeX;
+        resizeRect.y += changeY;
+        closeRect.x += changeX;
+        closeRect.y += changeY;
         for (AbstractUIComponent uiComponent : uiComponents) {
-            uiComponent.rect.setX(uiComponent.rect.getX() + changeX);
-            uiComponent.rect.setY(uiComponent.rect.getY() + changeY);
+            uiComponent.rect.x += changeX;
+            uiComponent.rect.y += changeY;
         }
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        backgroundImage.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-        closeIcon.draw(closeRect.getX(), closeRect.getY(), closeRect.getWidth(), closeRect.getHeight());
+        backgroundImage.draw(rect.x, rect.y, rect.width, rect.height);
+        closeIcon.draw(closeRect.x, closeRect.y, closeRect.width, closeRect.height);
         graphics.setColor(Color.black);
-        graphics.drawString(title, rect.getX() + 4, rect.getY());
+        graphics.drawString(title, rect.x + 4, rect.y);
 
-        for (AbstractUIComponent uiComponent : uiComponents)
-            if (uiComponent.enabled)
-                uiComponent.draw(gameContainer, stateBasedGame, graphics);
+        uiComponents.stream().filter(uiComponent -> uiComponent.enabled).forEach(uiComponent -> uiComponent.draw(gameContainer, stateBasedGame, graphics));
     }
 
     public void addComponent(AbstractUIComponent uiComponent) {
-        uiComponent.rect.setX(uiComponent.rect.getX() + rect.getX());
-        uiComponent.rect.setY(uiComponent.rect.getY() + rect.getY());
+        uiComponent.rect.x += rect.x;
+        uiComponent.rect.y += rect.y;
         uiComponents.add(uiComponent);
     }
 
     public void setSize(int width, int height) {
-        resize(width - rect.getWidth(), height - rect.getHeight());
+        resize(width - rect.width, height - rect.height);
     }
 
     public void setLocation(int x, int y) {
-        move(x - rect.getX(), y - rect.getY());
+        move(x - rect.x, y - rect.y);
     }
 
     public UIRect getRect() {

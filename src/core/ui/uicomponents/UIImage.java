@@ -27,6 +27,6 @@ public class UIImage extends AbstractUIComponent {
     }
 
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        image.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        image.draw(rect.x, rect.y, rect.width, rect.height);
     }
 }

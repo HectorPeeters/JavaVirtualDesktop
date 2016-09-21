@@ -21,8 +21,7 @@ public class InputKeyListener implements KeyListener {
             if (c == 8) {
                 if (s != null && s.length() > 0)
                     s = s.substring(0, s.length() - 1);
-            } else if (c == 13 || c == 9) {
-            } else {
+            } else if (c != 13 && c != 9) {
                 s += c;
             }
         }

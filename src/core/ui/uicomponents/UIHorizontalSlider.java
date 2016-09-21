@@ -1,6 +1,8 @@
-package core.ui;
+package core.ui.uicomponents;
 
 import core.assets.Loader;
+import core.ui.AbstractUIComponent;
+import core.ui.UIRect;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -24,12 +26,12 @@ public class UIHorizontalSlider extends AbstractUIComponent {
 
     public boolean update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         boolean returnValue = false;
-        UIRect knobRect = new UIRect((int) (rect.getX() - 6 + value * rect.getWidth()), rect.getY() - 2, 12, 12);
+        UIRect knobRect = new UIRect((int) (rect.x - 6 + value * rect.width), rect.y - 2, 12, 12);
         Input input = gameContainer.getInput();
         if (input.isMouseButtonDown(0)) {
             if (knobRect.contains(input.getMouseX(), input.getMouseY()) || dragging) {
                 float change = input.getMouseX() - prevMouseX;
-                value += change / rect.getWidth();
+                value += change / rect.width;
                 if (value > 1)
                     value = 1;
                 if (value < 0)
@@ -45,8 +47,8 @@ public class UIHorizontalSlider extends AbstractUIComponent {
     }
 
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        sliderImage.draw(rect.getX(), rect.getY(), rect.getWidth(), 8);
-        knobImage.draw(rect.getX() - 6 + value * rect.getWidth(), rect.getY() - 2, 12, 12);
+        sliderImage.draw(rect.x, rect.y, rect.width, 8);
+        knobImage.draw(rect.x - 6 + value * rect.width, rect.y - 2, 12, 12);
     }
 
     public float getValue() {

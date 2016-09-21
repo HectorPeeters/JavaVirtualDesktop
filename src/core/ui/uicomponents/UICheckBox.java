@@ -33,9 +33,9 @@ public class UICheckBox extends AbstractUIComponent {
     }
 
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        boxImage.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+        boxImage.draw(rect.x, rect.y, rect.width, rect.height);
         if (checked)
-            crossImage.draw(rect.getX() + rect.getWidth() / 4, rect.getY() + rect.getHeight() / 4, rect.getWidth() / 2, rect.getHeight() / 2);
+            crossImage.draw(rect.x + rect.width / 4, rect.y + rect.height / 4, rect.width / 2, rect.height / 2);
     }
 
     public boolean isChecked() {

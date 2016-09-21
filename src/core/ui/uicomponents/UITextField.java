@@ -12,14 +12,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class UITextField extends AbstractUIComponent {
 
-    private boolean focused;
+    protected boolean focused;
     private String text = "";
     private String showingText;
 
-    private float currentCursorTime = 40;
-    private boolean showCursor = true;
-
-    private ScalableImage boxImage;
+    protected ScalableImage boxImage;
 
     private InputKeyListener inputKeyListener;
 
@@ -45,19 +42,19 @@ public class UITextField extends AbstractUIComponent {
         return false;
     }
 
-    private String getShowString(GameContainer gameContainer) {
+    protected String getShowString(GameContainer gameContainer) {
         showingText = text;
-        while (gameContainer.getDefaultFont().getWidth(showingText) >= rect.getWidth() - 8) {
+        while (gameContainer.getDefaultFont().getWidth(showingText) >= rect.width - 8) {
             showingText = showingText.substring(1, showingText.length());
         }
         return showingText;
     }
 
     public void draw(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        boxImage.draw(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-        graphics.drawString(getShowString(gameContainer), rect.getX() + 4, rect.getY());
-        if (showCursor && focused)
-            graphics.fillRect(rect.getX() + gameContainer.getDefaultFont().getWidth(showingText) + 4, rect.getY(), 1, 18);
+        boxImage.draw(rect.x, rect.y, rect.width, rect.height);
+        graphics.drawString(getShowString(gameContainer), rect.x + 4, rect.y);
+        if (focused)
+            graphics.fillRect(rect.x + gameContainer.getDefaultFont().getWidth(showingText) + 4, rect.y, 1, 18);
     }
 
     public String getText() {

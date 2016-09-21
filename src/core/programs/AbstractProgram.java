@@ -32,7 +32,7 @@ public abstract class AbstractProgram {
     }
 
     public void setLocationNull() {
-        panel.setLocation((Settings.WIDTH - panel.getRect().getWidth()) / 2, (Settings.HEIGHT - panel.getRect().getHeight()) / 2);
+        panel.setLocation((Settings.WIDTH - panel.getRect().width) / 2, (Settings.HEIGHT - panel.getRect().height) / 2);
     }
 
     public void terminate() {
